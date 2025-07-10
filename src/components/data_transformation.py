@@ -60,26 +60,26 @@ class DataTransformation:
             num_pipeline = Pipeline(
                 steps= [
                     ('imputer',SimpleImputer(strategy="median")),
-                    ('scaler', StandardScaler()),
+                    ('scaler', StandardScaler(with_mean=False)),
                 ]
             )
 
             cat_pipeline = Pipeline(
                 steps = [
-                    ('imputer',SimpleImputer(strategy="most_frequent"))
+                    ("imputer",SimpleImputer(strategy="most_frequent")),
                     ("one_hot_encoder",OneHotEncoder()),
-                    ('scaler', StandardScaler()),
-                   
-                ]
+                    ('scaler', StandardScaler(with_mean=False)),
+                   ]
             )
             logging.info("Numerical columns std scaling completed")
             logging.info("Categorical columns encoding completed")
 
 # transformers : list of tuples --> List of (name, transformer, columns)
             preprocessor = ColumnTransformer(
+                transformers=[
                 ("numerical pipeline",num_pipeline,numerical_columns),
                 ("categorical pipeline", cat_pipeline, categorical_columns)
-            )
+            ])
 
             return preprocessor
         
@@ -92,7 +92,7 @@ class DataTransformation:
             test_df = pd.read_csv(test_path)
 
             logging.info ("Read train and test data completed")
-            logging.info("Obtaing preprocessor object ")
+            logging.info("Obtaining preprocessor object ")
 
             preprocessor_obj = self.get_data_tranformer_obj()
 
