@@ -13,23 +13,7 @@ from src.exception_handling import CustomException
 from src.logger import logging
 
 from src.utils import save_object
-'''
-Why Use a Config Class?
-Keeps file paths and constants organized in one place.
 
-Easy to change paths later without touching main logic.
-
-Helps in logging and debugging.
-
-Encourages clean code architecture.
-
-and 
-Method	                Pros	                                Cons
-"artifacts/train.csv"	Simple and quick	                    Not cross-platform safe
-os.path.join(...)	    Safe, clean, dynamic, cross-platform	Slightly more verbose
-
-
-'''
 @dataclass
 class DataTransforamtionConfig:
     preprocessor_obj_file_path = os.path.join('artifacts','preprocessor.pkl')
